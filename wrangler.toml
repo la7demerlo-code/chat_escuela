@@ -1,0 +1,11 @@
+name = "chatescuela"
+main = "index.js"
+compatibility_date = "2026-06-07"
+
+[[durable_objects.bindings]]
+name = "ClaseSession"
+class_name = "ClaseSession"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["ClaseSession"]
