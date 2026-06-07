@@ -1,11 +1,14 @@
 export default {
   async fetch(request, env) {
-    if (request.headers.get("Upgrade") === "websocket") {
-      let id = env.ClaseSession.idFromName("EES7_MERLO_ROOM");
-      let roomObject = env.ClaseSession.get(id);
-      return roomObject.fetch(request);
-    }
-    return new Response("Servidor Activo EES N7", { status: 200 });
+    const url = new URL(request.url);
+    // Extrae el ID de la clase de la URL (ej: ?room=XF9A) o usa GLOBAL si no viene ninguno
+    const room = url.searchParams.get("room") || "GLOBAL";
+    
+    // Crea un casillero de memoria exclusivo para ese código de aula
+    let id = env.ClaseSession.idFromName(room);
+    let roomObject = env.ClaseSession.get(id);
+    
+    return roomObject.fetch(request);
   }
 };
 
@@ -61,3 +64,4 @@ export class ClaseSession {
     }
   }
 }
+
